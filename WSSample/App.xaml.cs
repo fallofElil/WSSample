@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 
 using WSSample.Models;
+using WSSample.ViewModels;
 
 namespace WSSample
 {
@@ -10,10 +11,11 @@ namespace WSSample
         {
             base.OnStartup(e);
 
-            AppWindow app = new AppWindow();
-            app.Show();
-
             new Repository("DBConnection");
+
+            AppWindow app = new AppWindow();
+            app.DataContext = new AppViewModel();
+            app.Show();      
         }
     }
 }
