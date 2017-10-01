@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Collections.Generic;
 
 using WSSample.Models;
 using WSSample.ViewModels;
@@ -11,7 +12,7 @@ namespace WSSample
         {
             base.OnStartup(e);
 
-            new Repository("DBConnection");
+            new Repository("DBConnection").InitDataAsync();
 
             AppWindow app = new AppWindow();
             app.DataContext = new AppViewModel();

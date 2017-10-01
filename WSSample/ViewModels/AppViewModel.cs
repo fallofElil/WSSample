@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Input;
+using System.Linq;
 
 namespace WSSample.ViewModels
 {
@@ -14,13 +15,10 @@ namespace WSSample.ViewModels
         public IPage CurrentPage
         {
             get { return _currentPage; }
-            set
+            private set
             {
-                if (_currentPage != value)
-                {
-                    _currentPage = value;
-                    OnPropertyChanged("CurrentPage");
-                }
+                _currentPage = value;
+                OnPropertyChanged("CurrentPage");
             }
         }
 
@@ -36,27 +34,32 @@ namespace WSSample.ViewModels
             }
         }
 
-        public AppViewModel()
+        public AppViewModel() : this(_defaultPages) { }
+        public AppViewModel(Dictionary<string, IPage> pages) : this(pages, pages.Keys.First()) { }
+        public AppViewModel(Dictionary<string, IPage> pages, string startingPage)
         {
             if (_instance == null)
                 _instance = this;
 
-            Pages = new Dictionary<string, IPage>
-            {
-                { "Users", new UsersViewModel() },
-                { "Profiles", new ProfilesViewModel() },
-                { "Start", new StartViewModel() }
-            };
-
-            CurrentPage = Pages["Start"];
+            Pages = pages;
+            CurrentPage = Pages[startingPage];
         }
 
         public void ChangePage(string pageName)
-        {        
-            CurrentPage.Close();
-            CurrentPage = Pages[pageName];
-            CurrentPage.Show();
+        {
+            if (CurrentPage != Pages[pageName])
+            {
+                CurrentPage.Close();
+                CurrentPage = Pages[pageName];
+                CurrentPage.Show();
+            }
         }
+
+        private static Dictionary<string, IPage> _defaultPages = new Dictionary<string, IPage> {
+                { "Start", new StartViewModel() },
+                { "Users", new UsersViewModel() },
+                { "Profiles", new ProfilesViewModel() }
+        };
     }
 }
 

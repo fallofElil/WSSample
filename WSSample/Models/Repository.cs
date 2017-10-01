@@ -1,6 +1,7 @@
 ﻿using System.Data.Entity;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System;
 
 namespace WSSample.Models
 {
@@ -11,14 +12,27 @@ namespace WSSample.Models
 
         private AppData _context;
 
+        public event EventHandler DataInitialized;
+
         public Repository(string connection)
         {
             if (_instance == null)
                 _instance = this;
 
             _context = new AppData(connection);
-            Database.SetInitializer(new DataInitializer());
-            new Task(() => _context.Database.Initialize(true)).Start();
+        }
+
+        public void InitDataAsync()
+        {
+            if (Environment.GetEnvironmentVariable("env") == "development")
+                Database.SetInitializer(new DataInitializer());
+
+            Task init = new Task(() =>
+            {
+                _context.Database.Initialize(true);
+                DataInitialized(this, new EventArgs());
+            });
+            init.Start();
         }
 
         public IEnumerable<User> GetUsers()
