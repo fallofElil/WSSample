@@ -64,8 +64,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Presenters\ProfilesViewPresenter.cs" />
+    <Compile Include="Presenters\StartViewPresenter.cs" />
+    <Compile Include="Presenters\UsersViewPresenter.cs" />
     <Compile Include="Services\PageService.cs" />
-    <Compile Include="Views\IPage.cs" />
+    <Compile Include="Presenters\IPage.cs" />
     <Compile Include="Views\ProfilesView.xaml.cs">
       <DependentUpon>ProfilesView.xaml</DependentUpon>
     </Compile>

@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using System.Linq;
 
-using WSSample.Views;
+using WSSample.Presenters;
 
 namespace WSSample.Services
 {
@@ -14,10 +14,16 @@ namespace WSSample.Services
         public Dictionary<string, IPage> Pages { get; }
 
         private ContentControl _contentControl;
+
+        private IPage _currentPage;
         public IPage CurrentPage
         {
-            get { return (IPage)_contentControl.Content; }
-            private set { _contentControl.Content = value; }
+            get { return _currentPage; }
+            private set
+            {
+                _currentPage = value;
+                _contentControl.Content = _currentPage.Page;
+            }
         }
 
         public PageService(ContentControl contentControl) : this(contentControl, _defaultPages) { }
@@ -44,9 +50,9 @@ namespace WSSample.Services
         }
 
         private static Dictionary<string, IPage> _defaultPages = new Dictionary<string, IPage> {
-                { "Start", new StartView() },
-                { "Users", new UsersView() },
-                { "Profiles", new ProfilesView() }
+                { "Start", new StartViewPresenter() },
+                { "Users", new UsersViewPresenter() },
+                { "Profiles", new ProfilesViewPresenter() }
         };
     }
 }

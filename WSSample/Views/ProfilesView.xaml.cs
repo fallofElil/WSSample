@@ -1,31 +1,12 @@
 ﻿using System.Windows.Controls;
-using System.Collections.Generic;
-using System;
-
-using WSSample.Models;
 
 namespace WSSample.Views
 {
-    public partial class ProfilesView : UserControl, IPage
+    public partial class ProfilesView : UserControl
     {
         public ProfilesView()
         {
             InitializeComponent();
-
-            Repository.Instance.DataInitialized += OnDataInitialized;
         }
-
-        private void OnDataInitialized(object sender, EventArgs e)
-        {
-            itemsControl.ItemsSource = new List<User>(Repository.Instance.GetUsers());
-        }
-
-        public void Show()
-        {
-            if (itemsControl.Items.Count == 0)
-                itemsControl.ItemsSource = new List<Profile>(Repository.Instance.GetProfiles());
-        }
-
-        public void Close() { }
     }
 }
