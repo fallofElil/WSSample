@@ -29,11 +29,7 @@ namespace WSSample.ViewModels
             Profiles = new ObservableCollection<Profile>(Repository.Instance.GetProfiles());
         }
 
-        public void Show()
-        {
-            if (_profiles == null)
-                _profiles = new ObservableCollection<Profile>(Repository.Instance.GetProfiles());
-        }
+        public void Show() { }
 
         public void Close() { }
     }

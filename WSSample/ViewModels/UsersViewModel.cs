@@ -29,11 +29,7 @@ namespace WSSample.ViewModels
             Users = new ObservableCollection<User>(Repository.Instance.GetUsers());
         }
 
-        public void Show()
-        {
-            if (Users == null)
-                Users = new ObservableCollection<User>(Repository.Instance.GetUsers());
-        }
+        public void Show() { }
 
         public void Close() { }
     }

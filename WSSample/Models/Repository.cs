@@ -24,7 +24,7 @@ namespace WSSample.Models
 
         public void InitDataAsync()
         {
-            if (Environment.GetEnvironmentVariable("env") == "development")
+            if (Environment.GetEnvironmentVariable("env") != "production")
                 Database.SetInitializer(new DataInitializer());
 
             Task init = new Task(() =>
