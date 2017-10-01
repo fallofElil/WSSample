@@ -11,10 +11,10 @@ namespace WSSample
         {
             base.OnStartup(e);
 
-            new Repository("DBConnection");
+            new Repository("DBConnection").InitDataAsync();
 
             AppWindow app = new AppWindow();
-            new PageService(app.contentControl);
+            app.DataContext = new PageService(app.contentControl);
             app.Show();
         }
     }
